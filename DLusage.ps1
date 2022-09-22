@@ -10,9 +10,9 @@ Connect-ExchangeOnline
 
 # step 3: Divide the DLs into files containing 250 entries
 $numfiles = 0
-for ($i = 0; $i -lt (Get-Content -Path ~\DLs.txt).length/250; $i++) {
-	$a = $i*250
-	$b = ($i+1)*250
+for ($i = 1; $i -le (Get-Content -Path ~\DLs.txt).length/250; $i++) {
+	$a = ($i-1)*250
+	$b = $i*250-1
 	(Get-Content -Path ~\DLs.txt)[$a..$b] > ~\DLgroup$i.txt
 	$numfiles = $i
 }
