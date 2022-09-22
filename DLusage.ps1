@@ -38,4 +38,4 @@ Get-HistoricalSearch |
 			}
 		}
 	} | 
-Export-CSV ~\auditResults.csv -Append -NoTypeInformation
+	Export-CSV ~\auditResults.csv -Append -NoTypeInformation
