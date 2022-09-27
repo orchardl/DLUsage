@@ -24,13 +24,16 @@ for ($j=1; $j -le $numfiles; $j++) {
 		Start-HistoricalSearch -ReportTitle "Day $j" -StartDate (Get-Date).AddDays(-90) -EndDate (Get-Date) -ReportType MessageTrace -RecipientAddress $_
 		Start-Sleep -Milliseconds 500
 	} | Export-CSV -Path ~\DLID.csv -Append
-	Start-Sleep -Seconds 86401
+	if ($j -lt $numfiles) {
+		Start-Sleep -Seconds 86401
+	}
 }
 
 #step 5: Get Historical Search on everything we just ran
+$days = $numfiles + 1
 Get-HistoricalSearch | 
 	ForEach-Object -Process {
-		if ($_.SubmitDate -gt (Get-Date).AddDays(-4)) {
+		if ($_.SubmitDate -gt (Get-Date).AddDays(-$days)) {
 			New-Object psobject -Property @{
 				'DLname'=(Get-HistoricalSearch -JobID $_).RecipientAddress
 				'ReportStatus'=(Get-HistoricalSearch -JobID $_).ReportStatusDescription
