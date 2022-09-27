@@ -19,7 +19,7 @@ for ($i = 1; $i -le (Get-Content -Path ~\DLs.txt).length/250; $i++) {
 
 # step 4: Start Historical Search every day until done
 New-Item ~\DLID.csv
-for ($j=0; $j -lt $numfiles; $j++) {
+for ($j=1; $j -le $numfiles; $j++) {
 	Get-Content -Path ~\DLgroup$j.txt | %{
 		Start-HistoricalSearch -ReportTitle "Day $j" -StartDate (Get-Date).AddDays(-90) -EndDate (Get-Date) -ReportType MessageTrace -RecipientAddress $_
 		Start-Sleep -Milliseconds 500
