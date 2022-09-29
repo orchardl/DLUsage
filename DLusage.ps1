@@ -28,6 +28,7 @@ for ($j=1; $j -le $numfiles; $j++) {
 		Start-Sleep -Seconds 86401
 	}
 }
+Start-Sleep -Seconds 3600
 
 #step 5: Get Historical Search on everything we just ran
 $days = $numfiles + 1
