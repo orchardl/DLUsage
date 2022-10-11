@@ -7,6 +7,6 @@ The day after the last file is run, the historical search results will be compil
 This is for use with Exchange Online Management. User will be prompted to login with MS365 credentials. The account used to log in must be assigned the proper role to send remote PowerShell commands.
 
 WARNINGS:
-This script will only run successfully if it is uninterrupted during the entire time it runs. It will process 250 DLs per day, then it will take 1 extra day to compile the results. In other words, be patient with this baby, and don't restart your computer for a few days;)
+This script will only run successfully if it is uninterrupted during the entire time it runs. It will process 250 DLs per day, then it will take an extra few hours on top of that to compile the results. In other words, be patient with this baby, and don't restart your computer for a few days;)
 
 Also, if you've run any other historical searches in the last 24 hours, I'd wait 24 hours before running this script, otherwise you may miss some, and the script may pull up results from non-DLs.
