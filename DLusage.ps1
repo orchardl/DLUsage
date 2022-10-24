@@ -16,6 +16,11 @@ for ($i = 1; $i -le (Get-Content -Path ~\DLs.txt).length/250; $i++) {
 	(Get-Content -Path ~\DLs.txt)[$a..$b] > ~\DLgroup$i.txt
 	$numfiles = $i
 }
+$remainder = (Get-Content -Path ~\DLs.txt).length % 250
+if ($remainder -ne 0) {
+	$numfiles = $numfiles + 1
+	Get-Content -tail $remainder -Path ~\DLs.txt > ~\DLgroup$numfiles.txt
+}
 
 # step 4: Start Historical Search every day until done
 New-Item ~\DLID.csv
