@@ -1,5 +1,17 @@
 # PowerShell Script for Managing Distribution Lists and Historical Searches
 
+# Step 0: Check and Archive Existing Files
+$archiveFolder = "~\DLUsageArchive"
+$filesToCheck = @("~\DLs.txt", "~\DLID.csv", "~\auditResults.csv") + (Get-ChildItem "~\DLgroup*.txt")
+if (-not (Test-Path -Path $archiveFolder)) {
+    New-Item -ItemType Directory -Path $archiveFolder
+}
+foreach ($file in $filesToCheck) {
+    if (Test-Path -Path $file) {
+        Move-Item -Path $file -Destination $archiveFolder
+    }
+}
+
 # Step 1: Connect to Exchange Online
 # Check if the ExchangeOnlineManagement module is installed and import it
 $moduleName = "ExchangeOnlineManagement"
@@ -75,6 +87,19 @@ try {
         } | Export-CSV ~\auditResults.csv -Append -NoTypeInformation
 } catch {
     Send-MailMessage -From "sender@example.com" -To "your-email@example.com" -Subject "Script Error: Exporting Results Failed" -Body $_.Exception.Message -SmtpServer "smtp.example.com"
+    throw
+}
+
+# Step 6: Identify and Email Unused DLs
+# Process the auditResults.csv to find DLs not used in the last 90 days
+try {
+    $unusedDLs = Import-Csv ~\auditResults.csv | Where-Object { $_.EmailsSent -eq 0 }
+    if ($unusedDLs) {
+        $body = $unusedDLs | Format-Table | Out-String
+        Send-MailMessage -From "sender@example.com" -To "your-email@example.com" -Subject "Unused DLs in Last 90 Days" -Body $body -SmtpServer "smtp.example.com"
+    }
+} catch {
+    Send-MailMessage -From "sender@example.com" -To "your-email@example.com" -Subject "Script Error: Identifying Unused DLs Failed" -Body $_.Exception.Message -SmtpServer "smtp.example.com"
     throw
 }
 
