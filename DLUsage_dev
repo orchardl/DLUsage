@@ -2,7 +2,7 @@
 $thumbprint = "your thumbprint"
 $appID = "<appID>"
 $org = "conosco.onmicrosoft.com"
-$workingDirectory = "D:\ManageEngine\ADmanager\ADManager Plus\Scripts\DLusage"
+$workingDirectory = "C:\path\to\you\directory\DLusage"
 
 $SPSite = "https://myaapc.sharepoint.com/sites/ComplianceandSecurity"
 $SPFolder = "Shared Documents\DL Usage Reports" #change to your own SP Folder
